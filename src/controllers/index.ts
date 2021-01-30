@@ -22,14 +22,12 @@ router.get('/items', async (req: Request, res: Response, next: NextFunction ) =>
     const firstFourItems = items.slice(0, 4);
 
     res.status(200).send({
-      data: {
-        author: {
-          name: 'Juan Manuel',
-          lastname: 'Villarraza'
-        },
-        categories: getCategories(firstFourItems),
-        items: parseItems(firstFourItems),
-      }
+      author: {
+        name: 'Juan Manuel',
+        lastname: 'Villarraza'
+      },
+      categories: getCategories(firstFourItems),
+      items: parseItems(firstFourItems),
     });
     next();
   } catch (error) {
@@ -55,17 +53,15 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
     const description = await getItemDescription(id);
 
     res.status(200).send({
-      data: {
-        author: {
-          name: 'Juan Manuel',
-          lastname: 'Villarraza'
-        },
-        item: {
-          ...parseItems([item])[0],
-          sold_quantity: item.sold_quantity,
-          description,
-        },
-      } 
+      author: {
+        name: 'Juan Manuel',
+        lastname: 'Villarraza'
+      },
+      item: {
+        ...parseItems([item])[0],
+        sold_quantity: item.sold_quantity,
+        description,
+      },
     });
     next();
   } catch (error) {
