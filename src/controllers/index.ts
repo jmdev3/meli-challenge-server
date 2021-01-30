@@ -56,11 +56,11 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
 
     res.status(200).send({
       data: {
+        author: {
+          name: 'Juan Manuel',
+          lastname: 'Villarraza'
+        },
         item: {
-          author: {
-            name: 'Juan Manuel',
-            lastname: 'Villarraza'
-          },
           ...parseItems([item])[0],
           sold_quantity: item.sold_quantity,
           description,
