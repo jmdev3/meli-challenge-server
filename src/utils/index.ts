@@ -1,4 +1,4 @@
-export function parseItems(items: any) {
+function parseItems(items: any) {
   return items.map((item: any) => ({
     id: item.id,
     title: item.title,
@@ -13,6 +13,11 @@ export function parseItems(items: any) {
   }));
 }
 
-export function getCategories(items: any) {
+function getCategories(items: any) {
   return items.map((item: any) => item.category_id);
 }
+
+export {
+  parseItems,
+  getCategories,
+};

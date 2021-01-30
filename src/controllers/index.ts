@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import axios from 'axios';
+
 import { parseItems, getCategories } from '../utils';
+import { searchItems, getItem, getItemDescription } from '../service';
 
 const router = Router();
 
@@ -13,8 +14,8 @@ router.get('/items', async (req: Request, res: Response, next: NextFunction ) =>
   }
 
   try {
-    const response = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?q=:${search}`);
-    const firstFourItems = response.data.results.slice(0, 4);
+    const items = await searchItems(search as string);
+    const firstFourItems = items.slice(0, 4);
 
     res.status(200).send({
       data: {
@@ -24,7 +25,6 @@ router.get('/items', async (req: Request, res: Response, next: NextFunction ) =>
         },
         categories: getCategories(firstFourItems),
         items: parseItems(firstFourItems),
-        firstItem: response.data.results[0],
       }
     });
     next();
@@ -43,8 +43,8 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
   }
 
   try {
-    const response = await axios.get(`https://api.mercadolibre.com/items/${id}`);
-    const responseDesc = await axios.get(`https://api.mercadolibre.com/items/${id}/description`);
+    const item = await getItem(id);
+    const description = await getItemDescription(id);
 
     res.status(200).send({
       data: {
@@ -53,15 +53,15 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
             name: 'Juan Manuel',
             lastname: 'Villarraza'
           },
-          ...parseItems([response.data])[0],
-          sold_quantity: response.data.sold_quantity,
-          description: responseDesc.data.plain_text,
+          ...parseItems([item])[0],
+          sold_quantity: item.sold_quantity,
+          description,
         },
       } 
     });
     next();
   } catch (error) {
-    if (error.response!.status === 404) {
+    if (error.response && error.response.status === 404) {
       res.status(404).send({ error: 'Busqueda incorrecta' });
       return next(error);
     }
