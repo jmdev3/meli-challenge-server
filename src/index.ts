@@ -1,9 +1,11 @@
 import express, { Application } from 'express';
 import queryItems from './controllers';
 
+require('dotenv').config();
+
 // Boot express
 const app: Application = express();
-const port = 5000;
+const port = process.env.PORT;
 
 // Application routing
 app.use('/api', queryItems);
