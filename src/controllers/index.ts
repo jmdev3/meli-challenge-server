@@ -5,6 +5,10 @@ import { searchItems, getItem, getItemDescription } from '../service';
 
 const router = Router();
 
+/**
+ * api que devuelve los primeros 4 items en caso de matchear
+ * o una lista vacía
+ */
 router.get('/items', async (req: Request, res: Response, next: NextFunction ) => {
   const { search } = req.query;
 
@@ -34,6 +38,10 @@ router.get('/items', async (req: Request, res: Response, next: NextFunction ) =>
   }
 });
 
+/**
+ * api que dado un item id retorna la información relacionada
+ * o falla en caso de no encontrar
+ */
 router.get('/items/:id', async (req: Request, res: Response, next: NextFunction ) => {
   const { id } = req.params;
 
