@@ -13,8 +13,8 @@ function parseItems(items: any) {
   }));
 }
 
-function getCategories(items: any) {
-  return items.map((item: any) => item.category_id);
+function getCategories(categories: any) {
+  return categories.values[0].path_from_root.map((e: any) => e.name);
 }
 
 export {

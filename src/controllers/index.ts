@@ -18,15 +18,16 @@ router.get('/items', async (req: Request, res: Response, next: NextFunction ) =>
   }
 
   try {
-    const items = await searchItems(search as string);
-    const firstFourItems = items.slice(0, 4);
+    const { results, filters } = await searchItems(search as string);
+    const firstFourItems = results.slice(0, 4);
+    const categories = filters.find((f: any) => f.id === "category");
 
     res.status(200).send({
       author: {
         name: 'Juan Manuel',
         lastname: 'Villarraza'
       },
-      categories: getCategories(firstFourItems),
+      categories: getCategories(categories),
       items: parseItems(firstFourItems),
     });
     next();

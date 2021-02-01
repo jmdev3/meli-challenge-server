@@ -6,7 +6,7 @@ import axios from 'axios';
  */
 const searchItems = (queryString: string) => {
   return axios.get(`${process.env.MELIURL}sites/MLA/search?q=:${queryString}`)
-    .then(res => res.data.results)
+    .then(res => res.data)
     .catch(error => {
       throw error;
     });
