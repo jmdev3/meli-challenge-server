@@ -61,6 +61,7 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
       },
       item: {
         ...parseItems([item])[0],
+        picture: item.pictures.find((p: any) => p.id === item.thumbnail_id).url,
         sold_quantity: item.sold_quantity,
         description,
       },
