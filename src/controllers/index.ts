@@ -68,7 +68,6 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
     });
     next();
   } catch (error) {
-    console.log(error)
     if (error.response && error.response.status === 404) {
       res.status(404).send({ error: 'Busqueda incorrecta' });
       return next(error);
