@@ -14,7 +14,7 @@ function parseItems(items: any) {
 }
 
 function getCategories(categories: any) {
-  return categories.values[0].path_from_root.map((e: any) => e.name);
+  return categories.map((e: any) => e.name);
 }
 
 export {

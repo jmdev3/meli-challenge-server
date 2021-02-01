@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import { parseItems, getCategories } from '../utils';
-import { searchItems, getItem, getItemDescription } from '../service';
+import { searchItems, getItem, getItemDescription, getItemCategories } from '../service';
 
 const router = Router();
 
@@ -27,7 +27,7 @@ router.get('/items', async (req: Request, res: Response, next: NextFunction ) =>
         name: 'Juan Manuel',
         lastname: 'Villarraza'
       },
-      categories: getCategories(categories),
+      categories: getCategories(categories.values[0].path_from_root),
       items: parseItems(firstFourItems),
     });
     next();
@@ -52,6 +52,7 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
   try {
     const item = await getItem(id);
     const description = await getItemDescription(id);
+    const categories = await getItemCategories(item.category_id);
 
     res.status(200).send({
       author: {
@@ -63,9 +64,11 @@ router.get('/items/:id', async (req: Request, res: Response, next: NextFunction 
         sold_quantity: item.sold_quantity,
         description,
       },
+      categories: getCategories(categories),
     });
     next();
   } catch (error) {
+    console.log(error)
     if (error.response && error.response.status === 404) {
       res.status(404).send({ error: 'Busqueda incorrecta' });
       return next(error);

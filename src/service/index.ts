@@ -5,7 +5,7 @@ import axios from 'axios';
  * devuelve una lista de items matcheados o lista vacía
  */
 const searchItems = (queryString: string) => {
-  return axios.get(`${process.env.MELIURL}sites/MLA/search?q=:${queryString}`)
+  return axios.get(`${process.env.MELIURL}/sites/MLA/search?q=:${queryString}`)
     .then(res => res.data)
     .catch(error => {
       throw error;
@@ -17,7 +17,7 @@ const searchItems = (queryString: string) => {
  * devuelve el item o falla en caso de no encontrarlo
  */
 const getItem = (itemId: string) => {
-  return axios.get(`${process.env.MELIURL}items/${itemId}`)
+  return axios.get(`${process.env.MELIURL}/items/${itemId}`)
     .then(res => res.data)
     .catch(error => {
       throw error;
@@ -29,8 +29,19 @@ const getItem = (itemId: string) => {
  * devuelve la descripción del item o falla en caso de no encontrarlo
  */
 const getItemDescription = (itemId: string) => {
-  return axios.get(`${process.env.MELIURL}items/${itemId}/description`)
+  return axios.get(`${process.env.MELIURL}/items/${itemId}/description`)
     .then(res => res.data.plain_text)
+    .catch(error => {
+      throw error;
+    });
+}
+
+/**
+ * @param itemId representa el id del item para solicitar las categorias del mismo
+ */
+const getItemCategories = (itemId: string) => {
+  return axios.get(`${process.env.MELIURL}/categories/${itemId}`)
+    .then(res => res.data.path_from_root)
     .catch(error => {
       throw error;
     });
@@ -40,4 +51,5 @@ export {
   searchItems,
   getItem,
   getItemDescription,
+  getItemCategories,
 };
