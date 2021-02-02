@@ -27,7 +27,7 @@ router.get('/items', async (req: Request, res: Response, next: NextFunction ) =>
         name: 'Juan Manuel',
         lastname: 'Villarraza'
       },
-      categories: getCategories(categories.values[0].path_from_root),
+      categories: categories ? getCategories(categories.values[0].path_from_root) : [],
       items: parseItems(firstFourItems),
     });
     next();
