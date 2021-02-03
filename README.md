@@ -11,3 +11,8 @@
 >http://localhost:5000/api/items?search=query
 
 >http://localhost:5000/api/items/:id
+
+## TECHS
+
+- NODE
+- EXPRESS
