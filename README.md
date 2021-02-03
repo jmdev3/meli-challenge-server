@@ -4,6 +4,8 @@
 
 > npm run start
 
+> npm run build (build mode)
+
 ## RUTAS EXPUESTAS
 
 >http://localhost:5000/api/items?search=query
